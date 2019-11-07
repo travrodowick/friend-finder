@@ -22,12 +22,14 @@ module.exports = function(app) {
   // ---------------------------------------------------------------------------
 
   app.post("/api/friends", function(req, res) {
-    console.log(req.body);
     // Note the code here. Our "server" will respond to requests
     // req.body is available since we're using the body parsing middleware
     //=============================================================
-    //it all goes here
-    //==============================================================
+    var friendAdd = req.body;
+    console.log(friendAdd);
+    //===========================
+    friends.push(friendAdd);
+    res.json(friendAdd);
   });
 
   // ---------------------------------------------------------------------------

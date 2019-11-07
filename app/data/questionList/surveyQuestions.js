@@ -1,4 +1,4 @@
-module.exports = [
+var surveyQuestions = [
   {
     question: "i like dogs",
     answers: {
@@ -100,3 +100,5 @@ module.exports = [
     }
   }
 ];
+
+module.exports = surveyQuestions;
