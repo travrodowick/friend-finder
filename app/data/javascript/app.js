@@ -1,5 +1,3 @@
-require("./app/routing/apiRoutes")(app);
-require("./app/routing/htmlRoutes")(app);
 var surveyQuestions = require("../questionList/surveyQuestions");
 
 //============================FUNCTIONS=========================================\
@@ -31,24 +29,23 @@ function renderQuestions() {
   });
 
   //render submit form button
-  submitButton();
   function submitButton() {
     var submitButton = $(
       `<button type= "button" id="submit-bttn">SUBMIT</button>`
     );
-    $("#submit").append(submitButton);
+    document.getElementById("#submit").append(submitButton);
   }
 }
-renderQuestions();
 
-$("#submit").on("click", function(event) {
+document.getElementById("#submit").on("click", function(event) {
   event.preventDefault();
 
   // Here we grab the form elements
   var newFriend = {
-    friendName: $("name")
+    friendName: $("#name")
       .val()
       .trim()
+    // friendScore:  $("#answer-1").val
   };
 
   console.log(newFriend);
@@ -71,6 +68,73 @@ $("#submit").on("click", function(event) {
     $("#name").val("");
   });
 });
+
+// module.exports = function renderQuestions() {
+//   console.log("what the fuck?");
+//   surveyQuestions.forEach(function() {
+//     $("#questions").append("<br>" + surveyQuestions[i].question + "<br>");
+//     $("#questions").append(
+//       `<br>` +
+//         `<input type='radio' name= 'answers-1' value='answer-1'><label for= 'strongly disagree'>strongly disagree</label>`
+//     );
+//     $("#questions").append(
+//       `<br>` +
+//         `<input type='radio' name= 'answers-2' value='answer-2'><label for= 'disagree'>disagree</label>`
+//     );
+//     $("#questions").append(
+//       `<br>` +
+//         `<input type='radio' name= 'answers-3' value='answer-3'><label for= 'indifferent'>indifferent</label>`
+//     );
+//     $("#questions").append(
+//       `<br>` +
+//         `<input type='radio' name= 'answers-4' value='answer-4'><label for= 'agree'>agree</label>`
+//     );
+//     $("#questions").append(
+//       `<br>` +
+//         `<input type='radio' name= 'answers-5' value='answer-5'><label for= 'strongly agree'>strongly disagree</label>`
+//     );
+//   });
+
+//   //render submit form button
+//   submitButton();
+//   function submitButton() {
+//     var submitButton = $(
+//       `<button type= "button" id="submit-bttn">SUBMIT</button>`
+//     );
+//     document.getElementById("#submit").append(submitButton);
+//   }
+// };
+
+// document.getElementById("#submit").on("click", function(event) {
+//   event.preventDefault();
+
+//   // Here we grab the form elements
+//   var newFriend = {
+//     friendName: $("name")
+//       .val()
+//       .trim()
+//   };
+
+//   console.log(newFriend);
+
+//   // This line is the magic. It"s very similar to the standard ajax function we used.
+//   // Essentially we give it a URL, we give it the object we want to send, then we have a "callback".
+//   // The callback is the response of the server. In our case, we set up code in api-routes that "returns" true or false
+//   // depending on if a tables is available or not.
+
+//   $.post("/api/friends", newFriend, function(data) {
+//     // If a table is available... tell user they are booked.
+//     if (data) {
+//       alert("Yay! You are officially findable for Friends!");
+//     }
+//     // If something happened... tell user they on the waiting list.
+//     else {
+//       alert("Sorry you are on the wait list....");
+//     }
+//     // Clear the form when submitting
+//     $("#name").val("");
+//   });
+// });
 
 //-------TIMER----------
 //initiate contdown and display message on timeout and remove quiz
