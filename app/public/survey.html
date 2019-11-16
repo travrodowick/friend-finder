@@ -438,6 +438,20 @@
         </div>
       </div>
 
+      <div class="row">
+          <div class="col-lg-12">
+            <div class="card" id="friendMatch">
+              <div class="card-header">
+              <div class="card-body">
+                <div class="text-center">
+                </div>
+              </div>
+              </div>
+            </div>
+          </div>
+      </div>
+
+
       <br />
       <footer class="footer">
         <div class="container">
@@ -450,7 +464,7 @@
 
     <script>
     
-    function grabRadioAnswerValues() {
+ grabRadioAnswerValues = () => {
   var allScores = [];
   var radios = $("input");
   var value;
@@ -484,9 +498,20 @@ resetSurvey = () => {
     }
   }
   //clear form elements
-  $("#friendName").val("");
-  $("#friendEmail").val("");
+  $(".form-control").forEach($(this.val("")));
 };
+
+//--------------validate name and email
+validateName = () => {
+  var isValid = true;
+ $(".form-control").forEach(function () {
+  if ($(this.val) === "") {
+    isValid = false;
+  }
+ })
+ return isValid
+}
+
 
 //SUBMIT BUTTON CLICK LISTENER
 $("#submit-btn").on("click", function(event) {
@@ -494,6 +519,9 @@ $("#submit-btn").on("click", function(event) {
 
   //getting radio inputs
   grabRadioAnswerValues();
+
+
+  if (validateName()) {
 
   // Here we grab the form elements and make a newFriend object so we can later send it to our api
   var newFriend = {
@@ -512,10 +540,21 @@ $("#submit-btn").on("click", function(event) {
   // Essentially we give it a URL, we give it the object we want to send, then we have a "callback".
   // The callback is the response of the server.
 
+
   $.post("/api/friends", newFriend, function(data) {
-    // If a table is available... tell user they are booked.
+    // If data posted render it to the page in a new area
     if (data) {
-      alert("Yay! You are officially findable for Friends!");
+    var friendCard = $("#friendMatch")
+      
+      $("#newFriendName").text(data.friendName)
+      $("#newFriendEmail").text(data.friendEmail)
+
+      if (friendCard.display === "none") {
+        friendCard.display = "block"
+      } else {
+        friendCard.display = "none"
+      }
+
     }
     // If something happened... tell user they on the waiting list.
     else {
@@ -524,7 +563,10 @@ $("#submit-btn").on("click", function(event) {
     // Clear the form when submitting
     resetSurvey();
   });
+}
+
 });
+
 
 //reset button------------
 
