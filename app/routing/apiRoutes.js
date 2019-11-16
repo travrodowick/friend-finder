@@ -28,6 +28,7 @@ module.exports = function(app) {
     var friendAdd = req.body;
     console.log(friendAdd);
     //===========================
+
     friends.push(friendAdd);
     res.json(friendAdd);
   });
