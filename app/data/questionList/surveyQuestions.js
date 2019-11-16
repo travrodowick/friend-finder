@@ -101,4 +101,6 @@ var surveyQuestions = [
   }
 ];
 
-module.exports = surveyQuestions;
+console.log("survey questions imported");
+
+// module.exports = surveyQuestions;

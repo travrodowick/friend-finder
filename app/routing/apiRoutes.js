@@ -30,7 +30,7 @@ module.exports = function(app) {
     //===========================
 
     friends.push(friendAdd);
-    res.json(friendAdd);
+    res.json(true);
   });
 
   // ---------------------------------------------------------------------------
