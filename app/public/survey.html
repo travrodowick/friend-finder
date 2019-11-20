@@ -438,13 +438,14 @@
         </div>
       </div>
 
+
+      <!--------------------friend match goes here---------------->
       <div class="row">
           <div class="col-lg-12">
-            <div class="card" id="friendMatch">
-              <div class="card-header">
-              <div class="card-body">
-                <div class="text-center">
-                </div>
+            <div class="card" id="friendMatch" style="display: none;">
+              <div class="card-header" id="friendMatchDisplayName">
+              <div class="card-body" id="friendMatchDisplayImg">
+
               </div>
               </div>
             </div>
@@ -498,13 +499,19 @@ resetSurvey = () => {
     }
   }
   //clear form elements
-  $(".form-control").forEach($(this.val("")));
+  $("#friendName").val("");
+  $("#friendEmail").val("");
+
+  $("#friendMatchDisplayName").text("");
+  $("#friendMatchDisplayImg").text("");
+
+  $("#submit-btn").show();
 };
 
 //--------------validate name and email
 validateName = () => {
   var isValid = true;
- $(".form-control").forEach(function () {
+ $(".form-control").each(function () {
   if ($(this.val) === "") {
     isValid = false;
   }
@@ -516,7 +523,7 @@ validateName = () => {
 //SUBMIT BUTTON CLICK LISTENER
 $("#submit-btn").on("click", function(event) {
   event.preventDefault();
-
+  $("#submit-btn").hide();
   //getting radio inputs
   grabRadioAnswerValues();
 
@@ -544,15 +551,24 @@ $("#submit-btn").on("click", function(event) {
   $.post("/api/friends", newFriend, function(data) {
     // If data posted render it to the page in a new area
     if (data) {
-    var friendCard = $("#friendMatch")
-      
-      $("#newFriendName").text(data.friendName)
-      $("#newFriendEmail").text(data.friendEmail)
+      console.log("data:  ", data)
+      console.log(newFriend)
+    var friendCard = document.getElementById("friendMatch");
+    var name = data.friendName
+    var email = data.friendEmail
 
-      if (friendCard.display === "none") {
-        friendCard.display = "block"
+    console.log("name:  ", name)
+
+      $("#friendMatchDisplayName").append(`Friend Match:  ${name}`)
+      // $("#friendMatchDisplayName").text("i am working!!!")
+      $("#friendMatchDisplayImg").text(`Friend Email:  ${email}`)
+
+      if (window.getComputedStyle(friendCard).display === "none") {
+        $("#friendMatch").css("display", "block")
+        console.log("wtf")
       } else {
-        friendCard.display = "none"
+        $("#friendMatch").css("display", "none")
+        console.log("i dont understand")
       }
 
     }
@@ -560,11 +576,10 @@ $("#submit-btn").on("click", function(event) {
     else {
       alert("Sorry....maybe no friends right now....");
     }
-    // Clear the form when submitting
-    resetSurvey();
   });
+} else {
+  alert("required parts of form not filled out")
 }
-
 });
 
 
